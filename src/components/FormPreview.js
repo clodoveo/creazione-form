@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledFormPreviewContainer = styled.div`
@@ -20,6 +20,8 @@ export default function FormPreview(props) {
 
   const { selectedItemsList } = props;
 
+  const { formRef } = props;
+
   const FormItems = selectedItemsList.map((item) => {
     let Comp = <></>;
     if (!componentList[item.component]) {
@@ -36,8 +38,10 @@ export default function FormPreview(props) {
   });
 
   return (
-    <StyledFormPreviewContainer className="container row">
-      {FormItems}
-    </StyledFormPreviewContainer>
+    <div>
+      <StyledFormPreviewContainer ref={formRef} className="container row">
+        {FormItems}
+      </StyledFormPreviewContainer>
+    </div>
   );
 }

@@ -9,9 +9,11 @@ const StyledFormElement = styled.li`
   padding: 5px;
   margin: 2px;
   border-radius: 3px;
+  border: 1px solid #abb2bf;
+  width: 50px;
 `;
 const StyledIcon = styled.i`
-  font-size: 10px;
+  font-size: 30px;
   margin-right: 15px;
   margin-top: 5px;
 `;
@@ -51,8 +53,7 @@ export default function FormElement(props) {
       onClick={(e) => onClickHandler(e, item)}
       title="start drag"
     >
-      <StyledIcon className={item.icon} />
-      {item.title}
+      <StyledIcon className={item.icon} title={item.component} />
     </StyledFormElement>
   );
 }

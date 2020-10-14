@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import Highlight from "react-highlight";
 import FormPreview from "./FormPreview";
@@ -12,6 +12,21 @@ const StyledFooter = styled.div`
 `;
 
 export default function Footer(props) {
+  const formRef = useRef();
+  const textareaRef = useRef();
+  const [htmlResults, setHtmlResults] = useState();
+
+  useEffect(() => setHtmlResults(() => formRef.current.outerHTML), [
+    props.selectedItemsList
+  ]);
+
+  const onClickHandler = (e) => {
+    //console.log(formRef.current.outerHTML);
+    textareaRef.current.select();
+    document.execCommand("copy");
+    alert("HTML COPIED!");
+  };
+
   return (
     <StyledFooter>
       <div className="row">
@@ -24,10 +39,29 @@ export default function Footer(props) {
           </Highlight>
         </div>
         <div className="col-md-5">
-          <FormPreview selectedItemsList={props.selectedItemsList} />
+          <FormPreview
+            formRef={formRef}
+            selectedItemsList={props.selectedItemsList}
+          />
         </div>
         <div className="col-md-4">
           <JsonPaste setSelectedItemsList={props.setSelectedItemsList} />
+          <div style={{ position: "relative" }}>
+            <label style={{ color: "#ccc" }}>HTML results:</label>
+            <button
+              className="btn btn-secondary"
+              title="copy HTML to clipboard"
+              onClick={(e) => onClickHandler(e)}
+              style={{ position: "absolute", right: "7px", top: "11px" }}
+            >
+              <i className="fas fa-code"></i>
+            </button>
+            <textarea
+              style={{ width: "100%", height: "15vh" }}
+              ref={textareaRef}
+              value={htmlResults}
+            ></textarea>
+          </div>
         </div>
       </div>
     </StyledFooter>

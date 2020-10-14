@@ -32,10 +32,23 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledSelect = styled.select`
+  background: none;
+  border: none;
+  border-bottom: 1px solid #666;
+  outline: none;
+  width: 100%;
+  color: #98c379;
+  padding: 5px;
+  margin-bottom: 15px;
+  font-size: 16px;
+`;
+
 export default function ItemDatails(props) {
   const { selectedItemsList, setSelectedItemsList } = props;
   const { setSelectedItem } = props;
   const { item } = props;
+  const { elements } = props;
 
   const onChangeHandler = (e, item, field) => {
     const newValue = e.target.value;
@@ -52,21 +65,34 @@ export default function ItemDatails(props) {
 
   const itemFieldsKey = Object.keys(item);
 
+  const fieldsOption = elements.map((f) => (
+    <option value={f.component}>{f.component}</option>
+  ));
+
   const inputFields = itemFieldsKey.map((field, k) => (
     <div key={k}>
       <label>{field}</label>
-      <StyledInput
-        type="text"
-        value={item[field]}
-        onChange={(e) => onChangeHandler(e, item, field)}
-      />
+      {field === "component" ? (
+        <StyledSelect
+          value={item.component}
+          onChange={(e) => onChangeHandler(e, item, field)}
+        >
+          {fieldsOption}
+        </StyledSelect>
+      ) : (
+        <StyledInput
+          type="text"
+          value={item[field]}
+          onChange={(e) => onChangeHandler(e, item, field)}
+        />
+      )}
     </div>
   ));
 
   return (
     <StyledItemDetails>
       <legend>
-        {item.title}: {item.label}
+        {item.component}: {item.name}
       </legend>
       {inputFields}
     </StyledItemDetails>
