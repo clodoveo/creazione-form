@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -11,8 +11,8 @@ import DropHere from "./components/DropHere";
 import ItemDetails from "./components/ItemDetails";
 
 import { elements } from "./settings/";
-import { getTables } from "./adapters/dummy/tables";
-import { getFields } from "./adapters/dummy/fields";
+import { getTables } from "./adapters/xmysql/tables";
+import { getFields } from "./adapters/xmysql/fields";
 
 export default function App() {
   const tempState = [];
@@ -20,14 +20,29 @@ export default function App() {
   const [draggedItem, setDraggedItem] = useState({});
   const [selectedItem, setSelectedItem] = useState({});
 
-  const [tables, setTables] = useState(getTables());
+  const [tables, setTables] = useState([]);
   const [table, setTable] = useState("");
   const [fields, setFields] = useState([]);
 
   const tableChangeHandler = (e) => {
     setTable(e.target.value);
-    setFields(getFields(e.target.value));
   };
+
+  useEffect(() => {
+    async function fetchTables() {
+      const fetchedTables = await getTables();
+      setTables(fetchedTables);
+    }
+    fetchTables();
+  }, []);
+
+  useEffect(() => {
+    async function fetchFields() {
+      const fetchedFields = await getFields(table);
+      setFields(fetchedFields);
+    }
+    if (table !== "") fetchFields();
+  }, [table]);
 
   const onClickHandler = (e, f) => {
     const defaultItem = {
@@ -49,7 +64,7 @@ export default function App() {
 
   let SelectField = "";
   if (table !== "") {
-    const fields = getFields(table);
+    //const fields = getFields(table);
     SelectField = (
       <div>
         <label style={{ color: "#ccc" }}>Click to insert:</label>
