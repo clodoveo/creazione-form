@@ -12,6 +12,7 @@
     "react-form-builder2": "0.6.0",
     "react-highlight": "0.12.0",
     "react-scripts": "3.4.3",
+    "recoil": "0.0.13",
     "styled-components": "5.2.0"
   },
   "devDependencies": {

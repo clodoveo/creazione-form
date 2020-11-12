@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
+import { uniqueId } from "lodash";
 import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
+import { tableAtom, itemAtom } from "../atoms/optionsState";
 
 const StyledFormElement = styled.li`
   background-color: #282c34;
@@ -25,6 +27,9 @@ export default function FormElement(props) {
   const { setSelectedItemsList } = props;
   const { setSelectedItem } = props;
 
+  const SetAtomTable = useSetRecoilState(tableAtom(item.id));
+  const SetAtomItem = useSetRecoilState(itemAtom(item.id));
+
   const onDragStartHandler = (e) => {
     setDraggedItem(item);
   };
@@ -36,10 +41,13 @@ export default function FormElement(props) {
 
   const onClickHandler = (e, item) => {
     setSelectedItemsList((old) => {
-      const newList = [...old, item];
+      const newItem = { ...item, id: uniqueId() };
+      const newList = [...old, newItem];
       return newList;
     });
     setSelectedItem(item);
+    SetAtomItem(item);
+    SetAtomTable(item.dataSourceTable);
   };
 
   return (

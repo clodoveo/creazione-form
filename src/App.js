@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { RecoilRoot } from "recoil";
+
+import uniqueId from "lodash";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,13 +13,10 @@ import FormElementsList from "./components/FormElementsList";
 import DropHere from "./components/DropHere";
 import ItemDetails from "./components/ItemDetails";
 
-import { elements } from "./settings/";
-import { getTables } from "./adapters/xmysql/tables";
-import { getFields } from "./adapters/xmysql/fields";
+import { elements, defaultElement, getTables, getFields } from "./settings/";
 
 export default function App() {
-  const tempState = [];
-  const [selectedItemsList, setSelectedItemsList] = useState(tempState);
+  const [selectedItemsList, setSelectedItemsList] = useState([]);
   const [draggedItem, setDraggedItem] = useState({});
   const [selectedItem, setSelectedItem] = useState({});
 
@@ -45,16 +45,7 @@ export default function App() {
   }, [table]);
 
   const onClickHandler = (e, f) => {
-    const defaultItem = {
-      label: f,
-      name: f,
-      placeholder: "insert " + f,
-      info: "",
-      width: "12",
-      class: "",
-      component: "TextInput",
-      icon: "fa fa-font"
-    };
+    const defaultItem = defaultElement;
     setSelectedItemsList((old) => {
       const newList = [...old, defaultItem];
       return newList;
@@ -62,15 +53,40 @@ export default function App() {
     setSelectedItem(defaultItem);
   };
 
+  const addAllClickHandler = () => {
+    let myMaxId = 0;
+    if (selectedItemsList.length > 0) {
+      myMaxId = maxId(selectedItemsList);
+    }
+    const all = fields.map((f, k) => {
+      const newId = myMaxId + 1 + k ? myMaxId + 1 + k : k;
+      return { ...defaultElement, name: f, label: f, id: newId };
+    });
+    setSelectedItemsList((old) => {
+      const newList = [...old, ...all];
+      return newList;
+    });
+  };
+
+  const maxId = (o) => o.reduce((max, o) => (o.id > max ? o.id : max), o[0].id);
+
   let SelectField = "";
   if (table !== "") {
     //const fields = getFields(table);
     SelectField = (
       <div>
-        <label style={{ color: "#ccc" }}>Click to insert:</label>
+        <label style={{ color: "#ccc" }}>Click to insert: </label>
+        <button
+          className="btn btn-secondary"
+          style={{ marginRight: "10px", float: "right" }}
+          onClick={addAllClickHandler}
+        >
+          <i className="fa fa-plus" /> Insert All
+        </button>
         <ul>
           {fields.map((f) => (
             <li
+              key={"right-select-field-" + f}
               onClick={(e) => onClickHandler(e, f)}
               style={{
                 color: "#98c379",
@@ -90,74 +106,83 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      <Header />
-      <MainWrapper>
-        <ItemDetailsCol title="Field Params" colWidth={250}>
-          <ItemDetails
-            elements={elements}
-            item={selectedItem}
-            setSelectedItemsList={setSelectedItemsList}
+    <RecoilRoot>
+      <div className="App">
+        <Header />
+        <MainWrapper>
+          <ItemDetailsCol title="Field Params" colWidth={250}>
+            <ItemDetails
+              elements={elements}
+              item={selectedItem}
+              setSelectedItemsList={setSelectedItemsList}
+              selectedItemsList={selectedItemsList}
+              setSelectedItem={setSelectedItem}
+              table={table}
+              fields={fields}
+              tables={tables}
+              getFields={getFields}
+            />
+          </ItemDetailsCol>
+          <CenterCol
             selectedItemsList={selectedItemsList}
+            setSelectedItemsList={setSelectedItemsList}
+            draggedItem={draggedItem}
+            setDraggedItem={setDraggedItem}
             setSelectedItem={setSelectedItem}
-            table={table}
-            fields={fields}
-          />
-        </ItemDetailsCol>
-        <CenterCol
+          >
+            <div className="container">
+              <div className="row ">
+                <DropHere
+                  selectedItemsList={selectedItemsList}
+                  setSelectedItemsList={setSelectedItemsList}
+                  draggedItem={draggedItem}
+                  position={0}
+                  setSelectedItem={setSelectedItem}
+                  className="col-md-12"
+                />
+              </div>
+            </div>
+          </CenterCol>
+          <FormElementsCol colWidth={350}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <label style={{ color: "#ccc" }}>Select a table:</label>
+                <select
+                  style={{ width: "100%" }}
+                  onChange={(e) => tableChangeHandler(e)}
+                >
+                  {tables.map((t, k) =>
+                    t !== undefined ? (
+                      <option key={"right-select-table-" + k} value={t}>
+                        {t}
+                      </option>
+                    ) : null
+                  )}
+                </select>
+                <hr />
+                {SelectField}
+              </div>
+              <div>
+                <label style={{ color: "#ccc" }}>Add:</label>
+                <FormElementsList
+                  elements={elements}
+                  draggedItem={draggedItem}
+                  setDraggedItem={setDraggedItem}
+                  selectedItemsList={selectedItemsList}
+                  setSelectedItemsList={setSelectedItemsList}
+                  setSelectedItem={setSelectedItem}
+                  style={{ display: "flex", marginRight: "12px" }}
+                />
+              </div>
+            </div>
+          </FormElementsCol>
+        </MainWrapper>
+
+        <Footer
           selectedItemsList={selectedItemsList}
           setSelectedItemsList={setSelectedItemsList}
-          draggedItem={draggedItem}
-          setDraggedItem={setDraggedItem}
-          setSelectedItem={setSelectedItem}
-        >
-          <div className="container">
-            <div className="row ">
-              <DropHere
-                selectedItemsList={selectedItemsList}
-                setSelectedItemsList={setSelectedItemsList}
-                draggedItem={draggedItem}
-                position={0}
-                setSelectedItem={setSelectedItem}
-                className="col-md-12"
-              />
-            </div>
-          </div>
-        </CenterCol>
-        <FormElementsCol colWidth={350}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <label style={{ color: "#ccc" }}>Select a table:</label>
-              <select
-                style={{ width: "100%" }}
-                onChange={(e) => tableChangeHandler(e)}
-              >
-                {tables.map((t) => (
-                  <option value={t}>{t}</option>
-                ))}
-              </select>
-              <hr />
-              {SelectField}
-            </div>
-            <div>
-              <label style={{ color: "#ccc" }}>Add:</label>
-              <FormElementsList
-                elements={elements}
-                draggedItem={draggedItem}
-                setDraggedItem={setDraggedItem}
-                selectedItemsList={selectedItemsList}
-                setSelectedItemsList={setSelectedItemsList}
-                setSelectedItem={setSelectedItem}
-                style={{ display: "flex", marginRight: "12px" }}
-              />
-            </div>
-          </div>
-        </FormElementsCol>
-      </MainWrapper>
-      <Footer
-        selectedItemsList={selectedItemsList}
-        setSelectedItemsList={setSelectedItemsList}
-      />
-    </div>
+        />
+      </div>
+    </RecoilRoot>
   );
 }

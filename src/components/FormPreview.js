@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useRef, useEffect } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import styled from "styled-components";
 
 const StyledFormPreviewContainer = styled.div`
@@ -22,7 +22,7 @@ export default function FormPreview(props) {
 
   const { formRef } = props;
 
-  const FormItems = selectedItemsList.map((item) => {
+  const FormItems = selectedItemsList.map((item, k) => {
     let Comp = <></>;
     if (!componentList[item.component]) {
       Comp = importComponent(item.component);
@@ -31,8 +31,12 @@ export default function FormPreview(props) {
       Comp = componentList[item.component];
     }
     return (
-      <Suspense fallback="Loading">
-        <Comp item={item} />
+      <Suspense key={"form-preview-item-suspense" + item.id} fallback="Loading">
+        <Comp
+          key={"form-preview-item-" + item.id}
+          item={item}
+          itemId={item.id}
+        />
       </Suspense>
     );
   });

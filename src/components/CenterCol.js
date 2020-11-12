@@ -7,7 +7,7 @@ const StyledCenterCol = styled.div`
   border: 1px solid #ccc;
   background-color: #282c34;
   flex-grow: 8;
-  oveflow-y: scroll;
+  overflow-y: scroll;
 `;
 
 const importComponent = (componentName) =>
@@ -34,9 +34,8 @@ export default function CenterCol(props) {
     let className = item.width !== "" ? "col-md-" + item.width : "col-md-12";
 
     return (
-      <Suspense fallback="Loading">
+      <Suspense fallback="Loading" key={k}>
         <div
-          key={k}
           draggable={true}
           onDragStart={(e) => onDragStartHandler(e, item, k)}
           onDragEnd={(e) => onDragEndHandler(e)}
@@ -48,7 +47,7 @@ export default function CenterCol(props) {
             padding: "5px 15px"
           }}
         >
-          <Comp item={item} width="full" />
+          <Comp key={k} item={item} itemId={item.id} />
 
           <button
             style={{

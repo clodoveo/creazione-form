@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import SelectSorceLabel from "./SelectSorceLabel";
+import { useSetRecoilState } from "recoil";
+import { tableAtom } from "../atoms/optionsState";
 
 const StyledItemDetails = styled.div`
   display: block;
@@ -49,14 +52,43 @@ export default function ItemDatails(props) {
   const { setSelectedItem } = props;
   const { item } = props;
   const { elements } = props;
+  const { tables } = props;
+  const { getFields } = props;
 
-  const onChangeHandler = (e, item, field) => {
+  const [table, setTable] = useState("");
+
+  const SetAtomTable = useSetRecoilState(tableAtom(item.id));
+
+  const onChangeHandler = async (e, item, field) => {
     const newValue = e.target.value;
     const i = selectedItemsList.findIndex((o) => o.position === item.position);
-
     const newSelectedItemsList = selectedItemsList;
-    const newItem = { ...item };
-    newItem[field] = newValue;
+    let newItem = {};
+
+    switch (field) {
+      case "component":
+        const elementBlueprint = elements.find(
+          (el) => el.component === newValue
+        );
+        //newItem = { ...elementBlueprint, ...item, component: newValue };
+
+        for (let eb in elementBlueprint) {
+          newItem[eb] = item[eb];
+        }
+        newItem.component = newValue;
+        break;
+      case "dataSourceTable":
+        newItem = { ...item };
+        newItem[field] = newValue;
+        //await getFieldLabels(newValue);
+        setTable(newValue);
+        SetAtomTable(newValue);
+        break;
+      default:
+        newItem = { ...item };
+        newItem[field] = newValue;
+    }
+
     newSelectedItemsList[i] = newItem;
 
     setSelectedItemsList((old) => newSelectedItemsList);
@@ -65,27 +97,64 @@ export default function ItemDatails(props) {
 
   const itemFieldsKey = Object.keys(item);
 
-  const fieldsOption = elements.map((f) => (
-    <option value={f.component}>{f.component}</option>
+  const fieldsOption = elements.map((f, k) => (
+    <option value={f.component} key={"itemFieldsKey-" + k}>
+      {f.component}
+    </option>
   ));
+
+  const tableOption = tables.map((f, k) => (
+    <option key={"tableOption-" + k} value={f}>
+      {f}
+    </option>
+  ));
+
+  const inputFiledComponent = (field, item) => {
+    switch (field) {
+      case "component":
+        return (
+          <StyledSelect
+            value={item.component}
+            onChange={(e) => onChangeHandler(e, item, field)}
+          >
+            {fieldsOption}
+          </StyledSelect>
+        );
+      case "dataSourceTable":
+        return (
+          <StyledSelect
+            value={item.dataSourceTable}
+            onChange={(e) => onChangeHandler(e, item, field)}
+          >
+            {tableOption}
+          </StyledSelect>
+        );
+      case "dataSorceLabel":
+        return (
+          <SelectSorceLabel
+            value={item.dataSourceLabel}
+            onChangeHandler={onChangeHandler}
+            item={item}
+            field={field}
+            table={table}
+            getFields={getFields}
+          ></SelectSorceLabel>
+        );
+      default:
+        return (
+          <StyledInput
+            type="text"
+            value={item[field]}
+            onChange={(e) => onChangeHandler(e, item, field)}
+          />
+        );
+    }
+  };
 
   const inputFields = itemFieldsKey.map((field, k) => (
     <div key={k}>
       <label>{field}</label>
-      {field === "component" ? (
-        <StyledSelect
-          value={item.component}
-          onChange={(e) => onChangeHandler(e, item, field)}
-        >
-          {fieldsOption}
-        </StyledSelect>
-      ) : (
-        <StyledInput
-          type="text"
-          value={item[field]}
-          onChange={(e) => onChangeHandler(e, item, field)}
-        />
-      )}
+      {inputFiledComponent(field, item)}
     </div>
   ));
 

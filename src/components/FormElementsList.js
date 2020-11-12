@@ -1,5 +1,6 @@
 import React from "react";
 import FormElement from "./FormElement";
+import { uniqueId } from "lodash";
 
 export default function FormElementsList(props) {
   const { elements } = props;
@@ -10,7 +11,7 @@ export default function FormElementsList(props) {
 
   return elements.map((item) => (
     <FormElement
-      key={item.id}
+      key={uniqueId("formelements")}
       item={item}
       setDraggedItem={setDraggedItem}
       setSelectedItemsList={setSelectedItemsList}
