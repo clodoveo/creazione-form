@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { optionfamily, tableAtom } from "../atoms/optionsState";
-import { getFields } from "../adapters/xmysql/fields";
+import { getFields } from "../adapters/graphql/fields";
 
 import styled from "styled-components";
 

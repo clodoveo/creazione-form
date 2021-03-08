@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { optionfamily, tableAtom } from "../../atoms/optionsState";
 import { getData } from "../../adapters/graphql/data";
 
-const Select = (props) => {
+const Radio = (props) => {
   const { itemId } = props;
   const { item } = props;
   //const [item] = useRecoilState(itemAtom(itemId));
@@ -27,17 +27,28 @@ const Select = (props) => {
     <div key={itemId} className={className} style={{ maxHeight: "125px" }}>
       <div className="form-group">
         <label>{item.label}</label>
-        <select className="form-control">
+        <div>
           {ss.map((o, k) => (
-            <option key={"internal-option-" + k} value={o[item.dataSorceValue]}>
-              {o[item.dataSorceLabel]}
-            </option>
+            <div
+              className="form-check form-check-inline"
+              key={"radio-internal-option-" + k}
+            >
+              <input
+                name="inlineRadioOptions"
+                className="form-check-input"
+                type="radio"
+                id="inlineCheckbox1"
+                value={o[item.dataSorceValue]}
+              />
+              <label className="form-check-label" for="inlineCheckbox1">
+                {o[item.dataSorceLabel]}
+              </label>
+            </div>
           ))}
-        </select>
+        </div>
       </div>
     </div>
   );
 };
 
-const Select2 = React.memo(Select);
-export default Select2;
+export default Radio;

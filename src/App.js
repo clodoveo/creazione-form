@@ -31,6 +31,7 @@ export default function App() {
   useEffect(() => {
     async function fetchTables() {
       const fetchedTables = await getTables();
+      console.log(fetchedTables);
       setTables(fetchedTables);
     }
     fetchTables();
@@ -39,6 +40,7 @@ export default function App() {
   useEffect(() => {
     async function fetchFields() {
       const fetchedFields = await getFields(table);
+      console.log(fetchedFields);
       setFields(fetchedFields);
     }
     if (table !== "") fetchFields();
@@ -60,7 +62,7 @@ export default function App() {
     }
     const all = fields.map((f, k) => {
       const newId = myMaxId + 1 + k ? myMaxId + 1 + k : k;
-      return { ...defaultElement, name: f, label: f, id: newId };
+      return { ...defaultElement, name: f, label: f, id: newId, position: k };
     });
     setSelectedItemsList((old) => {
       const newList = [...old, ...all];
@@ -146,6 +148,16 @@ export default function App() {
           <FormElementsCol colWidth={350}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div>
+                <div>
+                  <button
+                    onClick={() => {
+                      sessionStorage.clear();
+                      location.reload();
+                    }}
+                  >
+                    Clear cache
+                  </button>
+                </div>
                 <label style={{ color: "#ccc" }}>Select a table:</label>
                 <select
                   style={{ width: "100%" }}

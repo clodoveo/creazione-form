@@ -9,10 +9,11 @@ const StyledFormPreviewContainer = styled.div`
 `;
 
 const importComponent = (componentName) =>
-  lazy(() =>
-    import(`./formComponents/${componentName}`).catch(() =>
+  lazy(
+    () => import(`./formComponents/${componentName}`)
+    /*.catch(() =>
       import(`./formComponents/NullComponent`)
-    )
+    )*/
   );
 
 export default function FormPreview(props) {

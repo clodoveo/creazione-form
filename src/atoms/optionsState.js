@@ -2,7 +2,7 @@ import { atom, atomFamily } from "recoil";
 
 export const tableAtom = atomFamily({
   key: "tableAtom",
-  default: "appartamento"
+  default: ""
 });
 
 export const itemAtom = atomFamily({
@@ -18,6 +18,6 @@ export const optionsState = atom({
 export const optionfamily = atomFamily({
   key: "myOptionFamily",
   default: (param) => {
-    return [{ ID: 0, title: "is default" }];
+    return [{}];
   }
 });

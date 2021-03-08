@@ -1,5 +1,5 @@
-import { getTables } from "../adapters/xmysql/tables";
-import { getFields } from "../adapters/xmysql/fields";
+import { getTables } from "../adapters/graphql/tables";
+import { getFields } from "../adapters/graphql/fields";
 
 const elements = [
   {
@@ -18,9 +18,9 @@ const elements = [
     label: "",
     name: "",
     placeholder: "",
-    dataSourceTable: "appartamento",
-    dataSorceLabel: "ID",
-    dataSorceValue: "ID",
+    dataSourceTable: "",
+    dataSorceLabel: "",
+    dataSorceValue: "",
     dataOption: "",
     info: "",
     width: "12",
@@ -101,6 +101,97 @@ const elements = [
     class: "",
     component: "H3",
     icon: "fas fa-heading"
+  },
+  {
+    id: "",
+    label: "",
+    width: "12",
+    class: "",
+    component: "TabDelimiter",
+    icon: "fas fa-align-justify"
+  },
+  {
+    id: "",
+    label: "",
+    width: "12",
+    class: "",
+    component: "BtnSave",
+    icon: "fas fa-save"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    dataSourceTable: "",
+    dataSorceLabel: "",
+    dataSorceValue: "",
+    dataOption: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "Checkbox",
+    icon: "far fa-check-square"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    dataSourceTable: "",
+    dataSorceLabel: "",
+    dataSorceValue: "",
+    dataOption: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "Radio",
+    icon: "far fa-dot-circle"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "Hidden",
+    icon: "fas fa-eye-slash"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "Switch",
+    icon: "fas fa-toggle-on"
+  },
+  {
+    html: "",
+
+    width: "12",
+    class: "",
+    component: "Div",
+    icon: " fab fa-html5"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    dataSourceTable: "",
+    dataSorceLabel: "",
+    dataSorceValue: "",
+    dataOption: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "FancyCb",
+    icon: " fab fa-html5"
   }
 ];
 

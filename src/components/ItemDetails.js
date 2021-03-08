@@ -35,6 +35,24 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledTextarea = styled.textarea`
+  background: none;
+  border: none;
+  border-bottom: 1px solid #666;
+  font-size: 16px;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 15px;
+  color: #98c379;
+  height:250px &:focus {
+    outline: none;
+    background-color: #ccc;
+    border: none;
+    border-bottom: 1px solid #999;
+    color: #666;
+  }
+`;
+
 const StyledSelect = styled.select`
   background: none;
   border: none;
@@ -139,6 +157,13 @@ export default function ItemDatails(props) {
             table={table}
             getFields={getFields}
           ></SelectSorceLabel>
+        );
+      case "html":
+        return (
+          <StyledTextarea
+            value={item[field]}
+            onChange={(e) => onChangeHandler(e, item, field)}
+          />
         );
       default:
         return (
