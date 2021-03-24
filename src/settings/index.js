@@ -11,7 +11,8 @@ const elements = [
     width: "12",
     class: "",
     component: "TextInput",
-    icon: "fa fa-font"
+    icon: "fa fa-font",
+    step: "1"
   },
   {
     id: "",
@@ -26,7 +27,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Select2",
-    icon: "fa fa-caret-square-o-down"
+    icon: "fa fa-caret-square-o-down",
+    step: "1"
   },
   {
     id: "",
@@ -37,7 +39,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Number",
-    icon: "fa fa-plus"
+    icon: "fa fa-plus",
+    step: "1"
   },
   {
     id: "",
@@ -48,7 +51,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Date",
-    icon: "fa fa-calendar"
+    icon: "fa fa-calendar",
+    step: "1"
   },
   {
     id: "",
@@ -58,7 +62,8 @@ const elements = [
     info: "",
     width: "12",
     class: "",
-    icon: "fa fa-image"
+    icon: "fa fa-image",
+    step: "1"
   },
   {
     id: "",
@@ -69,14 +74,16 @@ const elements = [
     width: "12",
     class: "",
     component: "TextArea",
-    icon: "fa fa-text-height"
+    icon: "fa fa-text-height",
+    step: "1"
   },
   {
     id: "",
     width: "12",
     class: "",
     component: "Hr",
-    icon: "fa fa-arrows-h"
+    icon: "fa fa-arrows-h",
+    step: "1"
   },
   {
     id: "",
@@ -84,7 +91,8 @@ const elements = [
     width: "12",
     class: "",
     component: "H1",
-    icon: "fas fa-heading"
+    icon: "fas fa-heading",
+    step: "1"
   },
   {
     id: "",
@@ -92,7 +100,8 @@ const elements = [
     width: "12",
     class: "",
     component: "H2",
-    icon: "fas fa-heading"
+    icon: "fas fa-heading",
+    step: "1"
   },
   {
     id: "",
@@ -100,7 +109,8 @@ const elements = [
     width: "12",
     class: "",
     component: "H3",
-    icon: "fas fa-heading"
+    icon: "fas fa-heading",
+    step: "1"
   },
   {
     id: "",
@@ -108,7 +118,8 @@ const elements = [
     width: "12",
     class: "",
     component: "TabDelimiter",
-    icon: "fas fa-align-justify"
+    icon: "fas fa-align-justify",
+    step: "1"
   },
   {
     id: "",
@@ -116,7 +127,8 @@ const elements = [
     width: "12",
     class: "",
     component: "BtnSave",
-    icon: "fas fa-save"
+    icon: "fas fa-save",
+    step: "1"
   },
   {
     id: "",
@@ -131,7 +143,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Checkbox",
-    icon: "far fa-check-square"
+    icon: "far fa-check-square",
+    step: "1"
   },
   {
     id: "",
@@ -146,7 +159,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Radio",
-    icon: "far fa-dot-circle"
+    icon: "far fa-dot-circle",
+    step: "1"
   },
   {
     id: "",
@@ -157,7 +171,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Hidden",
-    icon: "fas fa-eye-slash"
+    icon: "fas fa-eye-slash",
+    step: "1"
   },
   {
     id: "",
@@ -168,7 +183,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Switch",
-    icon: "fas fa-toggle-on"
+    icon: "fas fa-toggle-on",
+    step: "1"
   },
   {
     html: "",
@@ -176,7 +192,8 @@ const elements = [
     width: "12",
     class: "",
     component: "Div",
-    icon: " fab fa-html5"
+    icon: " fab fa-html5",
+    step: "1"
   },
   {
     id: "",
@@ -191,7 +208,8 @@ const elements = [
     width: "12",
     class: "",
     component: "FancyCb",
-    icon: " fab fa-html5"
+    icon: " fab fa-html5",
+    step: "1"
   }
 ];
 
@@ -205,7 +223,8 @@ const defaultElement = {
   width: "12",
   class: "",
   component: "TextInput",
-  icon: "fa fa-font"
+  icon: "fa fa-font",
+  step: "1"
 };
 
 export { elements, defaultElement, getTables, getFields };
