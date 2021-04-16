@@ -27,7 +27,7 @@ export default function CenterCol(props) {
 
   const FormItems = selectedItemsList.map((item, k) => {
     let Comp = <></>;
-    if (item.step !== activeStep) {
+    if (parseInt(item.step) !== activeStep) {
       return <></>;
     }
     if (!componentList[item.component]) {
@@ -67,13 +67,13 @@ export default function CenterCol(props) {
           >
             <i className="fa fa-times" />
           </button>
-          {/* <DropHere
+          <DropHere
             selectedItemsList={selectedItemsList}
             setSelectedItemsList={setSelectedItemsList}
             draggedItem={draggedItem}
             position={k + 1}
             setSelectedItem={setSelectedItem}
-          /> */}
+          />
         </div>
       </Suspense>
     );

@@ -27,7 +27,11 @@ export default function Footer(props) {
     alert("HTML COPIED!");
   };
 
-  const jsonView = { fields: props.selectedItemsList, steps: props.steps };
+  const jsonView = {
+    form: { table: props.selectedTable },
+    fields: props.selectedItemsList,
+    steps: props.steps
+  };
 
   return (
     <StyledFooter>
@@ -53,6 +57,7 @@ export default function Footer(props) {
           <JsonPaste
             setSelectedItemsList={props.setSelectedItemsList}
             setSteps={props.setSteps}
+            setSelectedTable={props.setSelectedTable}
           />
           <div style={{ position: "relative" }}>
             <label style={{ color: "#ccc" }}>HTML results:</label>

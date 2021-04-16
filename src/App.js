@@ -253,6 +253,8 @@ export default function App() {
           setSteps={setSteps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
+          selectedTable={table}
+          setSelectedTable={setTable}
         />
       </div>
     </RecoilRoot>
