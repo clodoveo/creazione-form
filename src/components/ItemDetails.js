@@ -12,7 +12,7 @@ const StyledItemDetails = styled.div`
   overflow-y: scroll;
 
   color: #d19a66;
-  height: 93%;
+
   padding: 5px;
   padding-bottom: 50px;
 `;
@@ -72,14 +72,15 @@ export default function ItemDatails(props) {
   const { elements } = props;
   const { tables } = props;
   const { getFields } = props;
-
+  const { steps } = props;
+  const { showWizard } = props;
   const [table, setTable] = useState("");
 
   const SetAtomTable = useSetRecoilState(tableAtom(item.id));
 
   const onChangeHandler = async (e, item, field) => {
     const newValue = e.target.value;
-    const i = selectedItemsList.findIndex((o) => o.position === item.position);
+    const i = selectedItemsList.findIndex((o) => o.id === item.id);
     const newSelectedItemsList = selectedItemsList;
     let newItem = {};
 
@@ -98,10 +99,11 @@ export default function ItemDatails(props) {
       case "dataSourceTable":
         newItem = { ...item };
         newItem[field] = newValue;
-        //await getFieldLabels(newValue);
+
         setTable(newValue);
         SetAtomTable(newValue);
         break;
+
       default:
         newItem = { ...item };
         newItem[field] = newValue;
@@ -126,6 +128,8 @@ export default function ItemDatails(props) {
       {f}
     </option>
   ));
+
+  const parents = selectedItemsList.filter((s) => s.component === "Fieldset");
 
   const inputFiledComponent = (field, item) => {
     switch (field) {
@@ -165,6 +169,33 @@ export default function ItemDatails(props) {
             onChange={(e) => onChangeHandler(e, item, field)}
           />
         );
+      case "step":
+        return (
+          <>
+            <StyledSelect
+              value={item[field]}
+              onChange={(e) => onChangeHandler(e, item, field)}
+            >
+              {steps.map((s) => (
+                <option value={s.id} key={`dselect${s.id}`}>
+                  {s.title}
+                </option>
+              ))}
+            </StyledSelect>
+          </>
+        );
+      case "container":
+        return (
+          // <StyledSelect value={item.container} onChange={onChangeHandler}>
+          //   <option value={0}> not set </option>
+          //   {parents.map((ss) => (
+          //     <option value={ss.id} key={`pselect${ss.id}`}>
+          //       {ss.id} - {ss.label}
+          //     </option>
+          //   ))}
+          // </StyledSelect>
+          <></>
+        );
       default:
         return (
           <StyledInput
@@ -184,7 +215,7 @@ export default function ItemDatails(props) {
   ));
 
   return (
-    <StyledItemDetails>
+    <StyledItemDetails style={{ height: "90%" }}>
       <legend>
         {item.component}: {item.name}
       </legend>

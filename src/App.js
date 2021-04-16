@@ -12,6 +12,7 @@ import ItemDetailsCol from "./components/ItemDetailsCol";
 import FormElementsList from "./components/FormElementsList";
 import DropHere from "./components/DropHere";
 import ItemDetails from "./components/ItemDetails";
+import WizardStepManagement from "./components/WizardStepManagement";
 
 import { elements, defaultElement, getTables, getFields } from "./settings/";
 
@@ -24,6 +25,11 @@ export default function App() {
   const [table, setTable] = useState("");
   const [fields, setFields] = useState([]);
 
+  const [steps, setSteps] = useState([{ id: 1, title: "default" }]);
+  const [showWizard, setShowWizard] = useState(false);
+
+  const [activeStep, setActiveStep] = useState(1);
+
   const tableChangeHandler = (e) => {
     setTable(e.target.value);
   };
@@ -34,6 +40,7 @@ export default function App() {
       console.log(fetchedTables);
       setTables(fetchedTables);
     }
+
     fetchTables();
   }, []);
 
@@ -49,7 +56,23 @@ export default function App() {
   const onClickHandler = (e, f) => {
     const defaultItem = defaultElement;
     setSelectedItemsList((old) => {
-      const newList = [...old, defaultItem];
+      let newId;
+      if (old.length > 0) {
+        newId = Math.max(...old.map((o) => o.id)) + 1;
+      } else {
+        newId = 0;
+      }
+      const newList = [
+        ...old,
+        {
+          ...defaultElement,
+          id: newId,
+          name: f,
+          label: f,
+          step: activeStep,
+          container: 0
+        }
+      ];
       return newList;
     });
     setSelectedItem(defaultItem);
@@ -62,7 +85,15 @@ export default function App() {
     }
     const all = fields.map((f, k) => {
       const newId = myMaxId + 1 + k ? myMaxId + 1 + k : k;
-      return { ...defaultElement, name: f, label: f, id: newId, position: k };
+      return {
+        ...defaultElement,
+        name: f,
+        label: f,
+        id: newId,
+        position: k,
+        step: activeStep,
+        container: 0
+      };
     });
     setSelectedItemsList((old) => {
       const newList = [...old, ...all];
@@ -112,7 +143,11 @@ export default function App() {
       <div className="App">
         <Header />
         <MainWrapper>
-          <ItemDetailsCol title="Field Params" colWidth={250}>
+          <ItemDetailsCol
+            title="Field Params"
+            colWidth={250}
+            style={{ position: "relative" }}
+          >
             <ItemDetails
               elements={elements}
               item={selectedItem}
@@ -123,6 +158,9 @@ export default function App() {
               fields={fields}
               tables={tables}
               getFields={getFields}
+              steps={steps}
+              setSteps={setSteps}
+              showWizard={showWizard}
             />
           </ItemDetailsCol>
           <CenterCol
@@ -131,7 +169,23 @@ export default function App() {
             draggedItem={draggedItem}
             setDraggedItem={setDraggedItem}
             setSelectedItem={setSelectedItem}
+            activeStep={activeStep}
           >
+            <button
+              style={{ position: "absolute", right: 5, bottom: 0 }}
+              onClick={() => setShowWizard((old) => !old)}
+            >
+              <i className={!showWizard ? "fa fa-eye" : "fa fa-eye-slash"} />{" "}
+              wizard
+            </button>
+
+            <WizardStepManagement
+              steps={steps}
+              setSteps={setSteps}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+            />
+
             <div className="container">
               <div className="row ">
                 <DropHere
@@ -141,6 +195,7 @@ export default function App() {
                   position={0}
                   setSelectedItem={setSelectedItem}
                   className="col-md-12"
+                  activeStep={activeStep}
                 />
               </div>
             </div>
@@ -184,6 +239,7 @@ export default function App() {
                   setSelectedItemsList={setSelectedItemsList}
                   setSelectedItem={setSelectedItem}
                   style={{ display: "flex", marginRight: "12px" }}
+                  activeStep={activeStep}
                 />
               </div>
             </div>
@@ -193,6 +249,10 @@ export default function App() {
         <Footer
           selectedItemsList={selectedItemsList}
           setSelectedItemsList={setSelectedItemsList}
+          steps={steps}
+          setSteps={setSteps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
         />
       </div>
     </RecoilRoot>

@@ -26,6 +26,7 @@ const StyledJsonPaste = styled.textarea`
 
 export default function JsonPaste(props) {
   const { setSelectedItemsList } = props;
+  const { setSteps } = props;
 
   const [jsonValue, setJsonValue] = useState("");
   const [validJson, setValidJson] = useState(false);
@@ -34,7 +35,8 @@ export default function JsonPaste(props) {
     setJsonValue(e.target.value);
 
     try {
-      setSelectedItemsList(JSON.parse(e.target.value));
+      setSelectedItemsList(JSON.parse(e.target.value).fields);
+      setSteps(JSON.parse(e.target.value).steps);
       setValidJson(true);
     } catch {
       setValidJson(false);

@@ -25,7 +25,10 @@ export default function FormElement(props) {
   const { setDraggedItem } = props;
   const { item } = props;
   const { setSelectedItemsList } = props;
+  const { selectedItemsList } = props;
   const { setSelectedItem } = props;
+
+  const { activeStep } = props;
 
   const SetAtomTable = useSetRecoilState(tableAtom(item.id));
   const SetAtomItem = useSetRecoilState(itemAtom(item.id));
@@ -40,13 +43,28 @@ export default function FormElement(props) {
   };
 
   const onClickHandler = (e, item) => {
-    setSelectedItemsList((old) => {
-      const newItem = { ...item, id: uniqueId() };
-      const newList = [...old, newItem];
-      return newList;
-    });
-    setSelectedItem(item);
-    SetAtomItem(item);
+    console.log("old", selectedItemsList);
+    let newId = 0;
+    console.log("il container è", item.container);
+    if (selectedItemsList.length > 0) {
+      newId = Math.max(...selectedItemsList.map((s) => s.id)) + 1;
+    }
+    console.log("item", item);
+    const newItem = {
+      ...item,
+      id: newId,
+      step: activeStep,
+      container: 0,
+      container2: 0
+    };
+    console.log("il newItem è", newItem);
+    const newList = [...selectedItemsList, newItem];
+    // console.log("il Newcontainer è", newList);
+
+    setSelectedItemsList(newList);
+
+    //setSelectedItem(item);
+    //SetAtomItem(item);
     SetAtomTable(item.dataSourceTable);
   };
 
@@ -55,9 +73,9 @@ export default function FormElement(props) {
       id={item.id}
       draggable={true}
       style={{ opacity: itemOpacity }}
-      onDragStart={onDragStartHandler}
-      onDrag={() => setItemOpacity(0.8)}
-      onDragEnd={(e) => onDragEndHandler(e)}
+      //onDragStart={onDragStartHandler}
+      //onDrag={() => setItemOpacity(0.8)}
+      //onDragEnd={(e) => onDragEndHandler(e)}
       onClick={(e) => onClickHandler(e, item)}
       title="start drag"
     >

@@ -12,6 +12,8 @@ export default function DropHere(props) {
   const { setSelectedItemsList } = props;
   const { draggedItem } = props;
   const { setSelectedItem } = props;
+  const { activeStep } = props;
+
   const onDragOverHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();

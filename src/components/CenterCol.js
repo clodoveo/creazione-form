@@ -21,10 +21,15 @@ export default function CenterCol(props) {
   const { selectedItemsList, setSelectedItemsList } = props;
   const { draggedItem, setDraggedItem } = props;
   const { setSelectedItem } = props;
+  const { activeStep } = props;
+
   const [componentList, setComponentList] = useState({});
 
   const FormItems = selectedItemsList.map((item, k) => {
     let Comp = <></>;
+    if (item.step !== activeStep) {
+      return <></>;
+    }
     if (!componentList[item.component]) {
       Comp = importComponent(item.component);
       setComponentList((c) => ({ ...c, [item.component]: Comp }));
@@ -62,13 +67,13 @@ export default function CenterCol(props) {
           >
             <i className="fa fa-times" />
           </button>
-          <DropHere
+          {/* <DropHere
             selectedItemsList={selectedItemsList}
             setSelectedItemsList={setSelectedItemsList}
             draggedItem={draggedItem}
             position={k + 1}
             setSelectedItem={setSelectedItem}
-          />
+          /> */}
         </div>
       </Suspense>
     );

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledLeftCol = styled.div`
   background-color: #282c34;
+  position: relative;
 `;
 const StyledLeftColResizerContainer = styled.div`
   display: flex;

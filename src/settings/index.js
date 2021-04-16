@@ -5,6 +5,17 @@ const elements = [
   {
     id: "",
     label: "",
+    html: "",
+    width: "12",
+    class: "",
+    component: "Fieldset",
+    icon: "fa fa-group",
+    step: "1",
+    container: "0"
+  },
+  {
+    id: "",
+    label: "",
     name: "",
     placeholder: "",
     info: "",
@@ -12,7 +23,21 @@ const elements = [
     class: "",
     component: "TextInput",
     icon: "fa fa-font",
-    step: "1"
+    step: "1",
+    container: "0"
+  },
+  {
+    id: "",
+    label: "",
+    name: "",
+    placeholder: "",
+    info: "",
+    width: "12",
+    class: "",
+    component: "Readonly",
+    icon: "fa fa-lock",
+    step: "1",
+    container: "0"
   },
   {
     id: "",
@@ -28,7 +53,8 @@ const elements = [
     class: "",
     component: "Select2",
     icon: "fa fa-caret-square-o-down",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -40,7 +66,8 @@ const elements = [
     class: "",
     component: "Number",
     icon: "fa fa-plus",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -52,7 +79,8 @@ const elements = [
     class: "",
     component: "Date",
     icon: "fa fa-calendar",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -63,7 +91,8 @@ const elements = [
     width: "12",
     class: "",
     icon: "fa fa-image",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -75,7 +104,8 @@ const elements = [
     class: "",
     component: "TextArea",
     icon: "fa fa-text-height",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -83,7 +113,8 @@ const elements = [
     class: "",
     component: "Hr",
     icon: "fa fa-arrows-h",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -92,7 +123,8 @@ const elements = [
     class: "",
     component: "H1",
     icon: "fas fa-heading",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -101,7 +133,8 @@ const elements = [
     class: "",
     component: "H2",
     icon: "fas fa-heading",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -110,7 +143,8 @@ const elements = [
     class: "",
     component: "H3",
     icon: "fas fa-heading",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -119,7 +153,8 @@ const elements = [
     class: "",
     component: "TabDelimiter",
     icon: "fas fa-align-justify",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -128,7 +163,8 @@ const elements = [
     class: "",
     component: "BtnSave",
     icon: "fas fa-save",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -144,7 +180,8 @@ const elements = [
     class: "",
     component: "Checkbox",
     icon: "far fa-check-square",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -160,7 +197,8 @@ const elements = [
     class: "",
     component: "Radio",
     icon: "far fa-dot-circle",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -172,7 +210,8 @@ const elements = [
     class: "",
     component: "Hidden",
     icon: "fas fa-eye-slash",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -184,7 +223,8 @@ const elements = [
     class: "",
     component: "Switch",
     icon: "fas fa-toggle-on",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     html: "",
@@ -193,7 +233,8 @@ const elements = [
     class: "",
     component: "Div",
     icon: " fab fa-html5",
-    step: "1"
+    step: "1",
+    container: 0
   },
   {
     id: "",
@@ -209,7 +250,8 @@ const elements = [
     class: "",
     component: "FancyCb",
     icon: " fab fa-html5",
-    step: "1"
+    step: "1",
+    container: 0
   }
 ];
 
@@ -224,7 +266,8 @@ const defaultElement = {
   class: "",
   component: "TextInput",
   icon: "fa fa-font",
-  step: "1"
+  step: "1",
+  container: 0
 };
 
 export { elements, defaultElement, getTables, getFields };

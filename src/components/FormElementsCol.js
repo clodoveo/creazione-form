@@ -4,6 +4,7 @@ import ColHeader from "./ColHeader";
 
 export default function FormElementsCol(props) {
   const { setSelectedItemList } = props;
+  const { activeStep } = props;
   return (
     <DraggableCol colWidth={props.colWidth} handlerPosition="left">
       <div

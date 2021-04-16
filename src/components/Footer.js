@@ -27,6 +27,8 @@ export default function Footer(props) {
     alert("HTML COPIED!");
   };
 
+  const jsonView = { fields: props.selectedItemsList, steps: props.steps };
+
   return (
     <StyledFooter>
       <div className="row">
@@ -35,17 +37,23 @@ export default function Footer(props) {
           style={{ overflowY: "scroll", height: "38vh" }}
         >
           <Highlight language="auto">
-            {JSON.stringify(props.selectedItemsList, null, 2)}
+            {JSON.stringify(jsonView, null, 2)}
           </Highlight>
         </div>
         <div className="col-md-5">
           <FormPreview
             formRef={formRef}
             selectedItemsList={props.selectedItemsList}
+            steps={props.steps}
+            activeStep={props.activeStep}
+            setActiveStep={props.setActiveStep}
           />
         </div>
         <div className="col-md-4">
-          <JsonPaste setSelectedItemsList={props.setSelectedItemsList} />
+          <JsonPaste
+            setSelectedItemsList={props.setSelectedItemsList}
+            setSteps={props.setSteps}
+          />
           <div style={{ position: "relative" }}>
             <label style={{ color: "#ccc" }}>HTML results:</label>
             <button
